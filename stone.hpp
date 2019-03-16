@@ -5,6 +5,7 @@
 class Stone {
 public:
     explicit Stone(StoneColor color);
+
     // noncopyable
     Stone(const Stone&) = delete;
     Stone& operator = (const Stone&) = delete;

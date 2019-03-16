@@ -12,6 +12,7 @@ public:
     using CellsContainerType = std::array<std::array<std::optional<Stone>, BOARD_WIDTH>, BOARD_WIDTH>;
 
     Board();
+
     // noncopyable
     Board(const Board&) = delete;
     Board& operator = (const Board&) = delete;
