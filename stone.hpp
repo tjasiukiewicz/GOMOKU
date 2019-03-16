@@ -7,5 +7,5 @@ public:
     explicit Stone(StoneColor color);
     StoneColor getColor() const;
 private:
-    StoneColor color;
+    const StoneColor color;
 };
