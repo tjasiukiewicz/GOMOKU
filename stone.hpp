@@ -11,6 +11,7 @@ public:
     Stone& operator = (const Stone&) = delete;
 
     StoneColor getColor() const;
+    char getRepresentation() const;
 private:
     const StoneColor color;
 };

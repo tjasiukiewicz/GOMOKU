@@ -17,7 +17,7 @@ public:
     Board(const Board&) = delete;
     Board& operator = (const Board&) = delete;
 
-    void dropStone(const Stone& stone, const Position& position);
+    bool dropStone(Stone&& stone, const Position& position);
     void show() const;
 private:
     CellsContainerType cells;

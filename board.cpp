@@ -14,12 +14,15 @@ void showColumnNames() {
     std::cout << '\n';
 }
 
-void showRow(std::size_t rowNum) {
+void showRow(const Board::CellsContainerType& cells, std::size_t rowNum) {
     std::cout << std::setw(2) << std::right << (rowNum + 1) << ' ';
-    for(auto i = 0UL; i < (BOARD_WIDTH - 1); ++i) {
-        std::cout << "+-";
-    }
-    std::cout << "+ ";
+    auto getCellRepr = [](const auto& cell) {
+        return cell ? cell->getRepresentation(): '+';
+    };
+    std::transform(cells[rowNum].cbegin(), std::prev(cells[rowNum].cend()),
+        std::ostream_iterator<char>(std::cout, "-"), getCellRepr);
+
+    std::cout << getCellRepr(cells[rowNum][BOARD_WIDTH - 1]) << ' ';
     std::cout << std::setw(2) << std::left << (rowNum + 1) << '\n';
 }
 
@@ -37,19 +40,20 @@ Board::Board()
     : cells{} {
 }
 
-void Board::dropStone(const Stone& stone, const Position& position) {
-    (void) stone;
-    (void) position;
+bool Board::dropStone(Stone&& stone, const Position& position) {
+    auto [col, row] = position.getIndexes();
+    return cells[row][col] ? false
+      : (cells[row][col].emplace(stone.getColor()), true);
 }
 
 void Board::show() const {
     showColumnNames();
     auto rowNum = BOARD_WIDTH;
     while(--rowNum) {
-        showRow(rowNum);
+        showRow(cells, rowNum);
         showSeparator();
     }
-    showRow(0);
+    showRow(cells, 0);
     showColumnNames();
 }
 
