@@ -10,14 +10,14 @@ Position getPosition() {
     for(;;) {
         std::cout << "Your move: ";
         std::cin >> column >> row;
-        if(std::cin) {
+        if(std::cin && Position::isRowCorrect(row) && Position::isColumnCorrect(column)) {
             break;
         }
         std::cerr << "Invalid move! Try again.\n";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
-    return Position{column - 'a' + 1, row};
+    return Position{column, row};
 }
 
 } // anonymous namespace
@@ -31,8 +31,10 @@ void Game::run() {
     board->show();
     for(;;) {
         std::cout << "Player: " << currentPlayer->getName() << " ";
-        auto position = getPosition();
-        board->dropStone(Stone{currentPlayer->getColor()}, position);
+        if(auto position = getPosition(); ! board->dropStone(Stone{currentPlayer->getColor()}, position)) {
+            std::cerr << "Incorrect move! Cell not empty. Try again.\n";
+            continue;
+        }
         board->show();
         currentPlayer.swap(nextPlayer);
     }

@@ -5,8 +5,10 @@
 
 class Position {
 public:
-    Position(std::size_t column, std::size_t row);
+    Position(char column, std::size_t row);
     std::pair<std::size_t, std::size_t> getIndexes() const;
+    static bool isColumnCorrect(char column);
+    static bool isRowCorrect(std::size_t row);
 private:
     const std::size_t column;
     const std::size_t row;
