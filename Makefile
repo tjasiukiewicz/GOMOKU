@@ -1,6 +1,6 @@
 .PHONY := clean
 CXXFLAGS := -std=c++17 -Wall -Wextra -pedantic
-CXX := clang++
+CXX := g++
 LDFLAGS := 
 
 OBJECTS := main.o board.o stone.o position.o

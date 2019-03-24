@@ -15,12 +15,12 @@ void showColumnNames() {
 }
 
 void showRow(std::size_t rowNum) {
-        std::cout << std::setw(2) << std::right << (rowNum + 1) << ' ';
-        for(auto i = 0UL; i < (BOARD_WIDTH - 1); ++i) {
-            std::cout << "+-";
-        }
-        std::cout << "+ ";
-        std::cout << std::setw(2) << std::left << (rowNum + 1) << '\n';
+    std::cout << std::setw(2) << std::right << (rowNum + 1) << ' ';
+    for(auto i = 0UL; i < (BOARD_WIDTH - 1); ++i) {
+        std::cout << "+-";
+    }
+    std::cout << "+ ";
+    std::cout << std::setw(2) << std::left << (rowNum + 1) << '\n';
 }
 
 void showSeparator() {
