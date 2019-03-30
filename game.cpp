@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "player_maker.hpp"
+#include "game_rule.hpp"
 #include <iostream>
 #include <limits>
 
@@ -27,6 +28,7 @@ Game::Game()
     : currentPlayer{},
       nextPlayer{},
       board{std::make_unique<Board>()},
+      gameRule{std::make_unique<GameRule>()},
       displayBoard{DisplayBoard(std::cout)} {
         auto prPlayers = PlayerMaker::makePlayers();
         currentPlayer = std::move(prPlayers.first);
@@ -34,17 +36,20 @@ Game::Game()
 }
 
 void Game::run() {
-    //board->show();
     board->renderOn(displayBoard);
     for(;;) {
         std::cout << "Player: " << currentPlayer->getName() << " ";
         auto stone = currentPlayer->getStone();
-        if(auto position = getPosition(); ! board->dropStone(std::move(stone), position)) {
+        auto position = getPosition();
+        if(! board->dropStone(std::move(stone), position)) {
             std::cerr << "Incorrect move! Cell not empty. Try again.\n";
             continue;
         }
+        if(gameRule->winOnPosition(position)) {
+            break;
+        }
         board->renderOn(displayBoard);
-        //board->show();
         currentPlayer.swap(nextPlayer);
     }
+    std::cout << "Winner is " << currentPlayer->getName() << '\n';
 }
