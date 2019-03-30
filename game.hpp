@@ -3,6 +3,7 @@
 #include <memory>
 #include "player.hpp"
 #include "board.hpp"
+#include "display_board.hpp"
 
 class Game {
 public:
@@ -12,4 +13,5 @@ private:
     std::unique_ptr<Player> currentPlayer;
     std::unique_ptr<Player> nextPlayer;
     std::unique_ptr<Board> board;
+    DisplayBoard displayBoard;
 };

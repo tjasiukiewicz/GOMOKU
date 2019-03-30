@@ -3,7 +3,7 @@
 #include <limits>
 
 namespace {
-
+        
 Position getPosition() {
     char column;
     std::size_t row;
@@ -25,17 +25,20 @@ Position getPosition() {
 Game::Game()
     : currentPlayer{std::make_unique<Player>("George", StoneColor::White)},
       nextPlayer{std::make_unique<Player>("Agnes", StoneColor::Black)},
-      board{std::make_unique<Board>()} {}
+      board{std::make_unique<Board>()},
+      displayBoard{DisplayBoard()} {}
 
 void Game::run() {
-    board->show();
+    //board->show();
+    board->renderOn(displayBoard);
     for(;;) {
         std::cout << "Player: " << currentPlayer->getName() << " ";
         if(auto position = getPosition(); ! board->dropStone(Stone{currentPlayer->getColor()}, position)) {
             std::cerr << "Incorrect move! Cell not empty. Try again.\n";
             continue;
         }
-        board->show();
+        board->renderOn(displayBoard);
+        //board->show();
         currentPlayer.swap(nextPlayer);
     }
 }

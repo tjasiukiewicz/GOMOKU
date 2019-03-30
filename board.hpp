@@ -7,6 +7,8 @@
 
 constexpr static std::size_t BOARD_WIDTH = 15;
 
+class DisplayBoard;
+
 class Board {
 public:
     using CellsContainerType = std::array<std::array<std::optional<Stone>, BOARD_WIDTH>, BOARD_WIDTH>;
@@ -18,7 +20,7 @@ public:
     Board& operator = (const Board&) = delete;
 
     [[nodiscard]] bool dropStone(Stone&& stone, const Position& position);
-    void show() const;
+    void renderOn(const DisplayBoard& display) const;
 private:
     CellsContainerType cells;
 };
