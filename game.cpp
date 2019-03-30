@@ -3,7 +3,7 @@
 #include <limits>
 
 namespace {
-        
+
 Position getPosition() {
     char column;
     std::size_t row;
@@ -26,7 +26,7 @@ Game::Game()
     : currentPlayer{std::make_unique<Player>("George", StoneColor::White)},
       nextPlayer{std::make_unique<Player>("Agnes", StoneColor::Black)},
       board{std::make_unique<Board>()},
-      displayBoard{DisplayBoard()} {}
+      displayBoard{DisplayBoard(std::cout)} {}
 
 void Game::run() {
     //board->show();

@@ -1,11 +1,13 @@
 #pragma once
 
+#include <iostream>
 #include "board.hpp"
 
 class DisplayBoard {
 public:
-    DisplayBoard();
+    explicit DisplayBoard(std::ostream& os);
     void show(const Board::CellsContainerType& cells) const;
 private:
-
+    std::ostream& os;
 };
+

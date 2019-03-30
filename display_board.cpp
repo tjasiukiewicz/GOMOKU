@@ -6,46 +6,47 @@
 
 namespace {
 
-void showColumnNames() {
-    std::cout << "   ";
+void showColumnNamesOn(std::ostream& os) {
+    os << "   ";
     char c = 'a';
-    std::generate_n(std::ostream_iterator<char>(std::cout, " "),
+    std::generate_n(std::ostream_iterator<char>(os, " "),
         BOARD_WIDTH, [&c] { return c++; });
-    std::cout << '\n';
+    os << '\n';
 }
 
-void showRow(const Board::CellsContainerType& cells, std::size_t rowNum) {
-    std::cout << std::setw(2) << std::right << (rowNum + 1) << ' ';
+void showRowOn(std::ostream& os, const Board::CellsContainerType& cells, std::size_t rowNum) {
+    os << std::setw(2) << std::right << (rowNum + 1) << ' ';
     auto getCellRepr = [](const auto& cell) {
         return cell ? cell->getRepresentation(): '+';
     };
     std::transform(cells[rowNum].cbegin(), std::prev(cells[rowNum].cend()),
-        std::ostream_iterator<char>(std::cout, "-"), getCellRepr);
+        std::ostream_iterator<char>(os, "-"), getCellRepr);
 
-    std::cout << getCellRepr(*(cells[rowNum].crbegin())) << ' ';
-    std::cout << std::setw(2) << std::left << (rowNum + 1) << '\n';
+    os << getCellRepr(*(cells[rowNum].crbegin())) << ' ';
+    os << std::setw(2) << std::left << (rowNum + 1) << '\n';
 }
 
-void showSeparator() {
-    std::cout << "   ";
-    std::fill_n(std::ostream_iterator<char>(std::cout, " "),
+void showSeparatorOn(std::ostream& os) {
+    os << "   ";
+    std::fill_n(std::ostream_iterator<char>(os, " "),
         BOARD_WIDTH - 1, '|');
-    std::cout << "|\n";
+    os << "|\n";
 }
 
 
 } // anonymous namespace
 
-DisplayBoard::DisplayBoard() {
+DisplayBoard::DisplayBoard(std::ostream& os)
+    : os{os} {
 }
 
 void DisplayBoard::show(const Board::CellsContainerType& cells) const {
-    showColumnNames();
+    showColumnNamesOn(os);
     auto rowNum = BOARD_WIDTH;
     while(--rowNum) {
-        showRow(cells, rowNum);
-        showSeparator();
+        showRowOn(os, cells, rowNum);
+        showSeparatorOn(os);
     }
-    showRow(cells, 0);
-    showColumnNames();
+    showRowOn(os, cells, 0);
+    showColumnNamesOn(os);
 }
