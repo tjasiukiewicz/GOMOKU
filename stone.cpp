@@ -4,8 +4,8 @@ Stone::Stone(StoneColor color)
     : color{color} {
 }
 
-StoneColor Stone::getColor() const {
-    return color;
+bool Stone::operator ==(const Stone& src) const {
+    return color == src.color;
 }
 
 char Stone::getRepresentation() const {

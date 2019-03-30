@@ -14,7 +14,7 @@ public:
     Stone(Stone&&) = default;
     Stone& operator = (Stone&&) = default;
 
-    StoneColor getColor() const;
+    bool operator == (const Stone&) const;
     char getRepresentation() const;
 private:
     const StoneColor color;
