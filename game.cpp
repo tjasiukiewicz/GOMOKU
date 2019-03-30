@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "player_maker.hpp"
 #include <iostream>
 #include <limits>
 
@@ -23,10 +24,14 @@ Position getPosition() {
 } // anonymous namespace
 
 Game::Game()
-    : currentPlayer{std::make_unique<Player>("George", StoneColor::White)},
-      nextPlayer{std::make_unique<Player>("Agnes", StoneColor::Black)},
+    : currentPlayer{},
+      nextPlayer{},
       board{std::make_unique<Board>()},
-      displayBoard{DisplayBoard(std::cout)} {}
+      displayBoard{DisplayBoard(std::cout)} {
+        auto prPlayers = PlayerMaker::makePlayers();
+        currentPlayer = std::move(prPlayers.first);
+        nextPlayer = std::move(prPlayers.second);
+}
 
 void Game::run() {
     //board->show();
