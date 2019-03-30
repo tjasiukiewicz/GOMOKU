@@ -8,12 +8,12 @@
 
 class Game {
 public:
-    Game();
+    Game(GameRule& gameRule, DisplayBoard& displayBoard);
     void run();
 private:
     std::unique_ptr<Player> currentPlayer;
     std::unique_ptr<Player> nextPlayer;
     std::unique_ptr<Board> board;
-    std::unique_ptr<GameRule> gameRule;
+    GameRule gameRule;
     DisplayBoard displayBoard;
 };

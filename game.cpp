@@ -24,12 +24,12 @@ Position getPosition() {
 
 } // anonymous namespace
 
-Game::Game()
+Game::Game(GameRule& gameRule, DisplayBoard& displayBoard)
     : currentPlayer{},
       nextPlayer{},
       board{std::make_unique<Board>()},
-      gameRule{std::make_unique<GameRule>()},
-      displayBoard{DisplayBoard(std::cout)} {
+      gameRule{gameRule},
+      displayBoard{displayBoard} {
         auto prPlayers = PlayerMaker::makePlayers();
         currentPlayer = std::move(prPlayers.first);
         nextPlayer = std::move(prPlayers.second);
@@ -45,7 +45,7 @@ void Game::run() {
             std::cerr << "Incorrect move! Cell not empty. Try again.\n";
             continue;
         }
-        if(gameRule->winOnPosition(position)) {
+        if(gameRule.winOnPosition(position)) {
             break;
         }
         board->renderOn(displayBoard);
