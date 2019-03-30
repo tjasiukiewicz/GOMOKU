@@ -4,6 +4,7 @@
 
 class DisplayBoard;
 class Position;
+class GameRule;
 
 class Board {
 public:
@@ -14,6 +15,7 @@ public:
     Board& operator = (const Board&) = delete;
 
     [[nodiscard]] bool dropStone(Stone&& stone, const Position& position);
+    void acceptGameRule(GameRule& gameRule) const;
     void renderOn(const DisplayBoard& display) const;
 private:
     BoardCellsContainerType cells;

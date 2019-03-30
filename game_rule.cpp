@@ -25,7 +25,18 @@ ForwardIter find_adjacent_count(ForwardIter startIt,
 
 } // anonymous namespace
 
+GameRule::GameRule()
+    : cells{nullptr} {
+}
+
+void GameRule::addCells(const BoardCellsContainerType& cells) {
+    this->cells = &cells;
+}
+
 bool GameRule::winOnPosition(const Position& position) const {
+    if(!cells) {
+        return false;
+    }
     (void) position;
     return false;
 }

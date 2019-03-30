@@ -31,6 +31,7 @@ void Game::run() {
             displayGame.cellNotEmpty();
             continue;
         }
+        board->acceptGameRule(gameRule);
         if(gameRule.winOnPosition(position)) {
             break;
         }
