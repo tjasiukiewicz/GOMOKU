@@ -10,6 +10,10 @@ public:
     Stone(const Stone&) = delete;
     Stone& operator = (const Stone&) = delete;
 
+    // movable
+    Stone(Stone&&) = default;
+    Stone& operator = (Stone&&) = default;
+
     StoneColor getColor() const;
     char getRepresentation() const;
 private:

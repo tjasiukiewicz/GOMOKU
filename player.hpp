@@ -3,6 +3,8 @@
 #include <string>
 #include "stone_color.hpp"
 
+class Stone;
+
 class Player {
 public:
     Player(const std::string& name, StoneColor color);
@@ -12,6 +14,7 @@ public:
 
     const std::string& getName() const;
     StoneColor getColor() const;
+    Stone getStone() const;
 private:
     const std::string name;
     const StoneColor color;

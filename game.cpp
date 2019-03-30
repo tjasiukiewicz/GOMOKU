@@ -33,7 +33,8 @@ void Game::run() {
     board->renderOn(displayBoard);
     for(;;) {
         std::cout << "Player: " << currentPlayer->getName() << " ";
-        if(auto position = getPosition(); ! board->dropStone(Stone{currentPlayer->getColor()}, position)) {
+        auto stone = currentPlayer->getStone();
+        if(auto position = getPosition(); ! board->dropStone(std::move(stone), position)) {
             std::cerr << "Incorrect move! Cell not empty. Try again.\n";
             continue;
         }
