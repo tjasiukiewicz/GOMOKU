@@ -14,7 +14,7 @@ void showColumnNamesOn(std::ostream& os) {
     os << '\n';
 }
 
-void showRowOn(std::ostream& os, const Board::CellsContainerType& cells, std::size_t rowNum) {
+void showRowOn(std::ostream& os, const BoardCellsContainerType& cells, std::size_t rowNum) {
     os << std::setw(2) << std::right << (rowNum + 1) << ' ';
     auto getCellRepr = [](const auto& cell) {
         return cell ? cell->getRepresentation(): '+';
@@ -40,7 +40,7 @@ DisplayBoard::DisplayBoard(std::ostream& os)
     : os{os} {
 }
 
-void DisplayBoard::show(const Board::CellsContainerType& cells) const {
+void DisplayBoard::show(const BoardCellsContainerType& cells) const {
     showColumnNamesOn(os);
     auto rowNum = BOARD_WIDTH;
     while(--rowNum) {

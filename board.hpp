@@ -1,18 +1,12 @@
 #pragma once
 
-#include <array>
-#include <optional>
-#include "stone.hpp"
-#include "position.hpp"
-
-constexpr static std::size_t BOARD_WIDTH = 15;
+#include "board_container.hpp"
 
 class DisplayBoard;
+class Position;
 
 class Board {
 public:
-    using CellsContainerType = std::array<std::array<std::optional<Stone>, BOARD_WIDTH>, BOARD_WIDTH>;
-
     Board();
 
     // noncopyable
@@ -22,7 +16,7 @@ public:
     [[nodiscard]] bool dropStone(Stone&& stone, const Position& position);
     void renderOn(const DisplayBoard& display) const;
 private:
-    CellsContainerType cells;
+    BoardCellsContainerType cells;
 };
 
 

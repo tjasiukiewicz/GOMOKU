@@ -1,16 +1,18 @@
 #pragma once
 
 #include <memory>
-#include "player.hpp"
-#include "board.hpp"
-#include "game_rule.hpp"
-#include "display_board.hpp"
-#include "display_game.hpp"
+
+class Player;
+class Board;
+class GameRule;
+class DisplayGame;
+class DisplayBoard;
 
 class Game {
 public:
     Game(GameRule& gameRule, DisplayGame& displayGame, DisplayBoard& displayBoard);
     void run();
+    ~Game();
 private:
     std::unique_ptr<Player> currentPlayer;
     std::unique_ptr<Player> nextPlayer;

@@ -1,6 +1,11 @@
 #include "game.hpp"
+#include "player.hpp"
+#include "board.hpp"
+#include "position.hpp"
 #include "player_maker.hpp"
 #include "game_rule.hpp"
+#include "display_game.hpp"
+#include "display_board.hpp"
 
 Game::Game(GameRule& gameRule, DisplayGame& displayGame, DisplayBoard& displayBoard)
     : currentPlayer{},
@@ -13,6 +18,8 @@ Game::Game(GameRule& gameRule, DisplayGame& displayGame, DisplayBoard& displayBo
         currentPlayer = std::move(prPlayers.first);
         nextPlayer = std::move(prPlayers.second);
 }
+
+Game::~Game() = default;
 
 void Game::run() {
     board->renderOn(displayBoard);

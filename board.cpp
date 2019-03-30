@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "position.hpp"
 #include "display_board.hpp"
 
 Board::Board()
