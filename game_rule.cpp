@@ -54,25 +54,51 @@ bool GameRule::winOnPosition(const Position& position) const {
         return false;
     }
 
-    auto buildVertical = [this](const Position& position) {
-        auto [col, row] = position.getIndexes();
-        auto startIndex = minIndex(col);
-        auto endIndex = maxIndex(col);
+    auto checkVertical = [this](const Position& position) {
 
-        std::vector<const BoardCellsContainerType::value_type::value_type *> ptrCells;
-        for(auto i = startIndex; i < endIndex; ++i) {
-            ptrCells.emplace_back(&((*(this->cells))[row][i]));
+        auto buildVertical = [this](const Position& position) {
+            auto [col, row] = position.getIndexes();
+            auto startIndex = minIndex(col);
+            auto endIndex = maxIndex(col);
+
+            std::vector<const BoardCellsContainerType::value_type::value_type *> ptrCells;
+            for(auto i = startIndex; i < endIndex; ++i) {
+                ptrCells.emplace_back(&((*(this->cells))[row][i]));
+            }
+            return ptrCells;
+        };
+
+        auto ptrCells = buildVertical(position);
+        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
+            [](const auto& first, const auto& second) {
+                return (*first && *second) ? *(*first) == *(*second): false;
+            }) != ptrCells.cend()) {
+            return true;
         }
-        return ptrCells;
+        return false;
     };
 
-    auto ptrCells = buildVertical(position);
-    if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
-        [](const auto& first, const auto& second) {
-            return (*first && *second) ? *(*first) == *(*second): false;
-        }) != ptrCells.cend()) {
-            return true;
-    }
+    auto checkHorizontal = [this](const Position& position) {
+        auto buildHorizontal = [this](const Position& position) {
+            auto [col, row] = position.getIndexes();
+            auto startIndex = minIndex(row);
+            auto endIndex = maxIndex(row);
+            std::vector<const BoardCellsContainerType::value_type::value_type *> ptrCells;
+            for(auto i = startIndex; i < endIndex; ++i) {
+                ptrCells.emplace_back(&((*(this->cells))[i][col]));
+            }
+            return ptrCells;
+        };
 
-    return false;
+        auto ptrCells = buildHorizontal(position);
+        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
+            [](const auto& first, const auto& second) {
+                return (*first && *second) ? *(*first) == *(*second): false;
+            }) != ptrCells.cend()) {
+            return true;
+        }
+        return false;
+    };
+
+    return checkVertical(position) || checkHorizontal(position);
 }
