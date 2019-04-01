@@ -6,7 +6,9 @@ namespace {
 template<typename ForwardIter, typename Comparator>
 ForwardIter find_adjacent_count(ForwardIter startIt,
     ForwardIter endIt, std::size_t count, Comparator comparator) {
-    if(static_cast<std::size_t>(std::distance(startIt, endIt)) >= count) {
+    if(count <= 1) {
+        return startIt;
+    } else if(static_cast<std::size_t>(std::distance(startIt, endIt)) >= count) {
         auto current_count = 1;
         auto next = std::next(startIt);
         for(;next != endIt; ++next) {
