@@ -44,6 +44,6 @@ PlayerMaker::PairPlayersType PlayerMaker::makePlayers() {
     auto player2Color = (player1Color == StoneColor::White ? StoneColor::Black: StoneColor::White);
     std::cout << player2Name << ", your stone is...: "
       << (player2Color == StoneColor::Black ? BlackName: WhiteName) << '\n';
-    return {std::make_unique<Player>(player1Name, player2Color),
+    return {std::make_unique<Player>(player1Name, player1Color),
         std::make_unique<Player>(player2Name, player2Color)};
 }

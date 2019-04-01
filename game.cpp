@@ -38,5 +38,6 @@ void Game::run() {
         board->renderOn(displayBoard);
         currentPlayer.swap(nextPlayer);
     }
+    board->renderOn(displayBoard);
     displayGame.showWinner(*currentPlayer);
 }
