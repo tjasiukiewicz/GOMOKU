@@ -17,7 +17,7 @@ public:
 
     Position getPosition() const;
     void showPlayer(const Player& player) const;
-    void cellNotEmpty() const;
+    void showCellNotEmpty() const;
     void showWinner(const Player& player) const;
 private:
     std::istream& is;

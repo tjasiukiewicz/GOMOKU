@@ -27,7 +27,7 @@ void DisplayGame::showPlayer(const Player& player) const {
     os << "Player: " << player.getName() << ": ";
 }
 
-void DisplayGame::cellNotEmpty() const {
+void DisplayGame::showCellNotEmpty() const {
     es << "Incorrect move! Cell not empty. Try again.\n";
 }
 

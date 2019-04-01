@@ -29,7 +29,7 @@ void Game::run() {
         auto stone = currentPlayer->getStone();
         auto position = displayGame.getPosition();
         if(! board->dropStone(std::move(stone), position)) {
-            displayGame.cellNotEmpty();
+            displayGame.showCellNotEmpty();
             continue;
         }
         board->acceptGameRule(gameRule);
