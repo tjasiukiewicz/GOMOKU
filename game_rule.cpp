@@ -1,5 +1,8 @@
 #include "game_rule.hpp"
 #include "position.hpp"
+#include <array>
+#include <cstddef>
+#include <iterator>
 #include <vector>
 
 namespace {

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "board_container.hpp"
-
 class DisplayBoard;
-class Position;
 class GameRule;
+class Position;
+class Stone;
 
 class Board {
 public:

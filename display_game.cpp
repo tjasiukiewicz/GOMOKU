@@ -1,6 +1,8 @@
 #include "display_game.hpp"
 #include "player.hpp"
 #include "position.hpp"
+#include <limits>
+#include <string>
 
 DisplayGame::DisplayGame(std::istream& is, std::ostream& os, std::ostream& es)
     : is{is}, os{os}, es{es} {}

@@ -1,5 +1,5 @@
 #include "position.hpp"
-#include "board.hpp"
+#include "board_container.hpp"
 #include <cassert>
 
 namespace {

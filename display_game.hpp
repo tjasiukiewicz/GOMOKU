@@ -1,7 +1,12 @@
 #pragma once
 
-#include <istream>
-#include <ostream>
+#include <algorithm>
+#include <array>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <optional>
+#include "display_board.hpp"
 
 class Player;
 class Position;

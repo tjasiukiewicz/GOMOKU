@@ -1,8 +1,10 @@
 #include "display_board.hpp"
-#include <iostream>
-#include <iomanip>
-#include <iterator>
 #include <algorithm>
+#include <array>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <optional>
 
 namespace {
 

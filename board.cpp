@@ -1,7 +1,11 @@
 #include "board.hpp"
-#include "position.hpp"
 #include "display_board.hpp"
 #include "game_rule.hpp"
+#include "position.hpp"
+#include "stone.hpp"
+#include <array>
+#include <optional>
+#include <utility>
 
 Board::Board()
     : cells{} {
