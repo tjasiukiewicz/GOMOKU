@@ -13,7 +13,7 @@ Position DisplayGame::getPosition() const {
     for(;;) {
         os << "Your move: ";
         is >> column >> row;
-        if(is && Position::isRowCorrect(row) && Position::isColumnCorrect(column)) {
+        if(is && Position::inBoard(column, row)) {
             break;
         }
         es << "Invalid move! Try again.\n";

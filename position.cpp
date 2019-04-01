@@ -13,18 +13,15 @@ constexpr static std::size_t MaxRow = BOARD_WIDTH;
 
 Position::Position(char column, std::size_t row)
     : column{column + 1UL - 'a'}, row{row} {
-    assert(isColumnCorrect(column));
-    assert(isRowCorrect(row));
+    assert((column >= MinColumn) && (column <= MaxColumn));
+    assert((row >= MinRow) && (row <= MaxRow));
 }
 
 std::pair<std::size_t, std::size_t> Position::getIndexes() const {
     return {column - 1, row - 1};
 }
 
-bool Position::isColumnCorrect(char column) {
-    return ((column >= MinColumn) && (column <= MaxColumn));
-}
-
-bool Position::isRowCorrect(std::size_t row) {
-    return ((row >= MinRow) && (row <= MaxRow));
+bool Position::inBoard(char column, std::size_t row) {
+    return ((column >= MinColumn) && (column <= MaxColumn))
+      && ((row >= MinRow) && (row <= MaxRow));
 }
