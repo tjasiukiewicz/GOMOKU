@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iterator>
 #include <vector>
+#include <algorithm>
 
 namespace {
 
@@ -54,7 +55,18 @@ bool GameRule::winOnPosition(const Position& position) const {
         return false;
     }
 
-    auto checkVertical = [this](const Position& position) {
+    auto findAdjacent = [](auto checkFunction, const Position& position) {
+        auto ptrCells = checkFunction(position);
+        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
+            [](const auto& first, const auto& second) {
+                return (*first && *second) ? *(*first) == *(*second): false;
+            }) != ptrCells.cend()) {
+            return true;
+        }
+        return false;
+    };
+
+    auto checkVertical = [this,&findAdjacent](const Position& position) {
 
         auto buildVertical = [this](const Position& position) {
             auto [col, row] = position.getIndexes();
@@ -68,21 +80,15 @@ bool GameRule::winOnPosition(const Position& position) const {
             return ptrCells;
         };
 
-        auto ptrCells = buildVertical(position);
-        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
-            [](const auto& first, const auto& second) {
-                return (*first && *second) ? *(*first) == *(*second): false;
-            }) != ptrCells.cend()) {
-            return true;
-        }
-        return false;
+        return findAdjacent(buildVertical, position);
     };
 
-    auto checkHorizontal = [this](const Position& position) {
+    auto checkHorizontal = [this, &findAdjacent](const Position& position) {
         auto buildHorizontal = [this](const Position& position) {
             auto [col, row] = position.getIndexes();
             auto startIndex = minIndex(row);
             auto endIndex = maxIndex(row);
+
             std::vector<const BoardCellsContainerType::value_type::value_type *> ptrCells;
             for(auto i = startIndex; i < endIndex; ++i) {
                 ptrCells.emplace_back(&((*(this->cells))[i][col]));
@@ -90,18 +96,11 @@ bool GameRule::winOnPosition(const Position& position) const {
             return ptrCells;
         };
 
-        auto ptrCells = buildHorizontal(position);
-        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
-            [](const auto& first, const auto& second) {
-                return (*first && *second) ? *(*first) == *(*second): false;
-            }) != ptrCells.cend()) {
-            return true;
-        }
-        return false;
+        return findAdjacent(buildHorizontal, position);
     };
 
 
-    auto checkRightDiagonal = [this](const Position& position) {
+    auto checkRightDiagonal = [this, &findAdjacent](const Position& position) {
         auto buildRightDiagonal = [this](const Position& position) {
             auto [col, row] = position.getIndexes();
             auto startDeltaIndex = std::min(col - minIndex(col), row - minIndex(row));
@@ -114,17 +113,10 @@ bool GameRule::winOnPosition(const Position& position) const {
             return ptrCells;
         };
 
-        auto ptrCells = buildRightDiagonal(position);
-        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
-            [](const auto& first, const auto& second) {
-                return (*first && *second) ? *(*first) == *(*second): false;
-            }) != ptrCells.cend()) {
-            return true;
-        }
-        return false;
+        return findAdjacent(buildRightDiagonal, position);
     };
 
-    auto checkLeftDiagonal = [this](const Position& position) {
+    auto checkLeftDiagonal = [this, &findAdjacent](const Position& position) {
         auto buildLeftDiagonal = [this](const Position& position) {
             auto [col, row] = position.getIndexes();
             auto startDeltaIndex = std::min(maxIndex(col) - col - 1, row - minIndex(row));
@@ -137,14 +129,7 @@ bool GameRule::winOnPosition(const Position& position) const {
             return ptrCells;
         };
 
-        auto ptrCells = buildLeftDiagonal(position);
-        if(find_adjacent_count(ptrCells.cbegin(), ptrCells.cend(), CheckRange,
-            [](const auto& first, const auto& second) {
-                return (*first && *second) ? *(*first) == *(*second): false;
-            }) != ptrCells.cend()) {
-            return true;
-        }
-        return false;
+        return findAdjacent(buildLeftDiagonal, position);
     };
 
     return checkVertical(position) || checkHorizontal(position)
